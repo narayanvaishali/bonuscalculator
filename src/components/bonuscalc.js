@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import firebase from 'firebase';
-import validator from 'validator';
+//import validator from 'validator';
 import './style.css';
 
 class BonusCalc extends Component {
