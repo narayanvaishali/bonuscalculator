@@ -14,20 +14,7 @@ class App extends Component {
    };
   return (
       <div className="App">
-        <div class="jumbotron">
-            <h1>Bonus Calculator</h1>
-            <Link to={`/login`}>
-                <button type="button" class="btn btn-primary btn-lg" style={buttonStyle}>
-                    Login
-                </button>
-            </Link>
-            <Link to={`/signup`}>
-                <button type="button" class="btn btn-primary btn-lg" style={buttonStyle}>
-                    Signup
-                </button>
-            </Link>
-        </div>
-
+            
         </div>
     )
   }

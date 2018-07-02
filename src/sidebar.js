@@ -5,7 +5,7 @@ import Home from './Home';
 import Login from './Login';
 import Staff from './staff';
 import Branchlist from './Branchlist';
-import BonusCalc from './components/bonuscalc';
+import BonusCalc from './bonuscalc';
 import AppRoutes from './components/AppRoutes';
 import firebase from 'firebase';
 import AppBar from 'material-ui/AppBar';
@@ -71,22 +71,22 @@ class Sidebar extends Component {
 
     switch(this.state.show) {
         case 'home':
-            content = (<Home authenticated={this.state.authenticated}/>);
+            content = <h1>&nbsp;</h1>
             break;
 
         case 'staff':
-                   content = (<Staff authenticated={this.state.authenticated}/>);
+                   content =  <h1>&nbsp;</h1>
                    break;
         case 'branchlist':
-            content = (<Branchlist authenticated={this.state.authenticated}/>);
+            content = <h1>&nbsp;</h1>
             break;
 
         case 'bonuscalc':
-                content = (<BonusCalc authenticated={this.state.authenticated}/>);
+                content = <h1>&nbsp;</h1>
                 break;
 
          case 'login':
-                content = (<Login/>);
+                content = <h1>&nbsp;</h1>
                 break;
 
         default:
@@ -111,32 +111,24 @@ class Sidebar extends Component {
 
                               <ul>
                                       <li>
-                                        <Link to="/Home" ><MenuItem onClick={this.showHome} >Home</MenuItem></Link>
+                                        <MenuItem><Link to="/Home">Home</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/Staff"><MenuItem onClick={this.showStaff} >Staff</MenuItem></Link>
+                                        <MenuItem><Link to="/Staff">Staff</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/Branches"><MenuItem onClick={this.showBranchList} >Branches</MenuItem></Link>
+                                          <MenuItem><Link to="/Branchlist">Branches</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/BonusCalc"><MenuItem onClick={this.showBonusCalc} >Bonus Calculator</MenuItem></Link>
+                                        <MenuItem><Link to="/BonusCalc">Bonus Calculator</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/Login"><MenuItem onClick={this.showLogin}>Login</MenuItem></Link>
+                                        <MenuItem ><Link to="/Login">Login</Link></MenuItem>
                                       </li>
                                 </ul>
 
                           </Drawer>
                           <AppRoutes />
-                          <Paper style={paperStyle} zDepth={5}>
-
-                              <Toolbar style={{"justifyContent": "center"}}>
-                                  <ToolbarTitle text=""/>
-                              </Toolbar>
-                              {content}
-                              <hr/>
-                          </Paper>
                       </div>
     );
   }

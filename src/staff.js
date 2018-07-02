@@ -4,6 +4,9 @@ import AddStaff from './components/addstaff';
 import Header from './components/Header';
 import firebase from 'firebase';
 import './App.css';
+import Paper from 'material-ui/Paper';
+import paperStyle from 'material-ui/Paper';
+import {Toolbar, ToolbarTitle} from 'material-ui/Toolbar';
 
 class Staff extends Component {
 
@@ -21,14 +24,16 @@ class Staff extends Component {
     },*/
    render() {
       return (
-        <div className="container">
-              <div className="columns">
-                <div className="column is-6">
-                    <AddStaff db={firebase} />
-                    <StaffList db={firebase}  editStaff={this.props.editStaff}/>
-                  </div>
-              </div>
-         </div>
+        <Paper style={paperStyle} zDepth={10}>
+           <Toolbar style={{"justifyContent": "center"}}>
+               <ToolbarTitle text=""/>
+           </Toolbar>
+            <div className="container">
+                       <AddStaff db={firebase} />
+                       <StaffList db={firebase}  editStaff={this.props.editStaff}/>
+            </div>
+           <hr/>
+       </Paper>
       );
    }
 }

@@ -5,7 +5,9 @@ import App from '../App';
 import Home from '../Home';
 import Login from '../Login';
 import Signup from '../Register';
-import Branchlist from '../Branchlist';
+import Branchlist from '../components/branches';
+import Staff from './components/stafflist';
+import BonusCalc from './components/bonuscalc';
 import firebase from 'firebase';
 //import Dashboard from '../pages/dashboard';
 //import { config } from '../utils/Config';
@@ -66,11 +68,9 @@ export default class AppRoutes extends React.Component {
 			    <Route exact path='/Login' render={() => <Login authenticate={this.authenticate} />} />
 					<Route exact path='/Home' render={() => <Home authenticate={this.authenticate} />} />
 			    <Route exact path='/Signup' render={() => <Signup authenticate={this.authenticate} />} />
-			    <Route path='/Branchlist' render={() => (
-			    	this.state.user.isLoggedIn ?
-			    	        (<Home authenticate={this.authenticate} user={this.state.user} />) :
-			    	        (<Redirect to="/Login" />)
-			    )} />
+					<Route exact path='/Branchlist' render={() => <Branchlist authenticate={this.authenticate} />} />
+					<Route exact path='/Staff' render={() => <Staff authenticate={this.authenticate} />} />
+					<Route exact path='/BonusCalc' render={() => <BonusCalc authenticate={this.authenticate} />} />
 			</Switch>
 		);
 	}

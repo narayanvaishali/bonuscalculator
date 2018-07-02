@@ -6,7 +6,8 @@ import Home from '../Home';
 import Login from '../Login';
 import Signup from '../Register';
 import Branchlist from '../Branchlist';
-import staff from '../staff';
+import BonusCalc from '../bonuscalc';
+import Staff from '../staff';
 import firebase from 'firebase';
 import { config } from '../utils/Config';
 //import Dashboard from '../pages/dashboard';
@@ -96,6 +97,10 @@ authenticate(user) {
 			    <Route exact path='/Login' render={() => <Login authenticate={this.authenticate} />} />
 					<Route exact path='/Home' render={() => <Home authenticate={this.authenticate} />} />
 			    <Route exact path='/Signup' render={() => <Signup authenticate={this.authenticate} />} />
+					<Route exact path='/Branchlist' render={() => <Branchlist authenticate={this.authenticate} />} />
+					<Route exact path='/Staff' render={() => <Staff authenticate={this.authenticate} />} />
+					<Route exact path='/BonusCalc' render={() => <BonusCalc authenticate={this.authenticate} />} />
+
 			</Switch>
 		);
 	}

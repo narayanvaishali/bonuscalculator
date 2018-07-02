@@ -78,7 +78,7 @@ class Login extends Component {
         {loggedIn: false, email:'', password :''}
       );
       firebase.auth().signOut();
-      this.props.history.push('/');
+      this.props.history.push('/Login');
     }
     redirectUser () {
     //  this.props.history.push('/');
