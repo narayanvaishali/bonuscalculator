@@ -11,8 +11,6 @@ import firebase from 'firebase';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import Paper from 'material-ui/Paper';
-import {Toolbar, ToolbarTitle} from 'material-ui/Toolbar';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const paperStyle = {
@@ -55,15 +53,15 @@ class Sidebar extends Component {
                this.setState({show: 'bonuscalc', open: false, authenticated : false });
            };
       // Initialize Firebase
-      // var config = {
-      //   apiKey: "AIzaSyDeM4zkSI2494TOTisoF4IwwrXX0slt9rE",
-      //   authDomain: "bonuscalculator-3cc6c.firebaseapp.com",
-      //   databaseURL: "https://bonuscalculator-3cc6c.firebaseio.com",
-      //   projectId: "bonuscalculator-3cc6c",
-      //   storageBucket: "bonuscalculator-3cc6c.appspot.com",
-      //   messagingSenderId: "588481287510"
-      // };
-      // firebase.initializeApp(config);
+       var config = {
+         apiKey: "AIzaSyDeM4zkSI2494TOTisoF4IwwrXX0slt9rE",
+         authDomain: "bonuscalculator-3cc6c.firebaseapp.com",
+         databaseURL: "https://bonuscalculator-3cc6c.firebaseio.com",
+         projectId: "bonuscalculator-3cc6c",
+         storageBucket: "bonuscalculator-3cc6c.appspot.com",
+         messagingSenderId: "588481287510"
+       };
+       firebase.initializeApp(config);
   }
 
   render() {
@@ -111,32 +109,25 @@ class Sidebar extends Component {
 
                               <ul>
                                       <li>
-                                        <Link to="/Home" ><MenuItem onClick={this.showHome} >Home</MenuItem></Link>
+                                        <MenuItem><Link to="/Home" >Home</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/Staff"><MenuItem onClick={this.showStaff} >Staff</MenuItem></Link>
+                                        <MenuItem> <Link to="/Staff">Staff</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/Branches"><MenuItem onClick={this.showBranchList} >Branches</MenuItem></Link>
+                                        <MenuItem><Link to="/Branches">Branches</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/BonusCalc"><MenuItem onClick={this.showBonusCalc} >Bonus Calculator</MenuItem></Link>
+                                        <MenuItem><Link to="/BonusCalc">Bonus Calculator</Link></MenuItem>
                                       </li>
                                       <li>
-                                        <Link to="/Login"><MenuItem onClick={this.showLogin}>Login</MenuItem></Link>
+                                        <MenuItem><Link to="/Login">Login</Link></MenuItem>
                                       </li>
                                 </ul>
 
                           </Drawer>
                           <AppRoutes />
-                          <Paper style={paperStyle} zDepth={5}>
 
-                              <Toolbar style={{"justifyContent": "center"}}>
-                                  <ToolbarTitle text=""/>
-                              </Toolbar>
-                              {content}
-                              <hr/>
-                          </Paper>
                       </div>
     );
   }

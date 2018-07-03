@@ -152,19 +152,7 @@ const styles = {
                          <table >
                              <tr>
                                  <td>
-
                                      <table >
-                                         <tr>
-                                             <td style={{verticalAlign:'center'}} >
-                                                 <table  className="table table-striped table-custom" >
-                                                     <tr>
-                                                         <td style={{textAlign:'center'}}>
-                                                         <span >BONUS CALCULATOR</span>
-                                                         </td>
-                                                     </tr>
-                                                 </table>
-                                             </td>
-                                         </tr>
                                          <tr>
                                             <td style={{colspan:"2"}}>
                                                  <table border="1" styles={{background: '#0080bd', width:'100em', cellspacing:'10', cellpadding:'10' }}>

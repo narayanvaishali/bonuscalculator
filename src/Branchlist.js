@@ -3,6 +3,8 @@ import Branches from './components/branches';
 import AddBranch from './components/addbranch';
 import Header from './components/Header';
 import firebase from 'firebase';
+import {Paper, paperStyle} from 'material-ui/Paper';
+import {Toolbar, ToolbarTitle} from 'material-ui/Toolbar';
 import './App.css';
 
 class Branchlist extends Component {
@@ -13,15 +15,15 @@ class Branchlist extends Component {
 
    render() {
       return (
-        <div className="container">
-              <Header title="" />
-              <div className="columns">
-                <div className="column is-6">
-                  <AddBranch db={firebase} />
-                    <Branches db={firebase} />
-                  </div>
-              </div>
-         </div>
+          <div className="container">
+                <Header title="" />
+                <div className="columns">
+                  <div className="column is-6">
+                      <AddBranch db={firebase} />
+                      <Branches db={firebase} />
+                    </div>
+                </div>
+           </div>
       );
    }
 }

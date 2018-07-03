@@ -12,6 +12,7 @@ import firebase from 'firebase';
 import Branchlist from './Branchlist';
 import Sidebar from './sidebar';
 import Home from './Home';
+import AppRoutes from './components/AppRoutes';
 //import './components/style.css';
 
 class Login extends Component {
@@ -88,7 +89,6 @@ class Login extends Component {
 
     // const { from } = this.props.location.state || '/';
     //  const { fireRedirect } = this.state.fireRedirect;
-
     const {history} = this.props;
 
      firebase.auth().onAuthStateChanged(function(user) {
@@ -99,6 +99,7 @@ class Login extends Component {
          document.getElementById("login_div").style.display = "none";
 
          var user = firebase.auth().currentUser;
+          console.log(user);
 
          if(user != null){
                  //this.setState({ fireRedirect: true });
@@ -106,6 +107,7 @@ class Login extends Component {
 
                 var email_id = user.email;
                  document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
+                // authenticate(user);
                   // this.setState({loggedIn: true, email: user.email });
                   //console.log(this.state.fireRedirect);
                   history.push('/Home');
@@ -129,9 +131,9 @@ class Login extends Component {
                <form>
                 <div id="login_div" class="main-div">
                  <h3>Login</h3>
-                 <input type="email" placeholder="Email..." id="email"  onChange={this.handleEmailChange} value={this.state.email}/>
-                 <input type="password" placeholder="Password..." id="password" onChange={this.handlePwdChange}  value={this.state.password}/>
-                 <button onClick={this.login} >Login to Account</button>
+                   <input type="email" placeholder="Email..." id="email"  onChange={this.handleEmailChange} value={this.state.email}/>
+                   <input type="password" placeholder="Password..." id="password" onChange={this.handlePwdChange}  value={this.state.password}/>
+                   <button onClick={this.login} >Login to Account</button>
                 </div>
 
                 <div id="user_div" class="loggedin-div">
