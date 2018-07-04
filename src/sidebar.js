@@ -6,12 +6,46 @@ import Login from './Login';
 import Staff from './staff';
 import Branchlist from './Branchlist';
 import BonusCalc from './components/bonuscalc';
-import AppRoutes from './components/AppRoutes';
+//import AppRoutes from './components/AppRoutes';
+import Signup from './Register';
+import Branches from './Branchlist';
 import firebase from 'firebase';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { config } from './utils/Config';
+import { firebaseAuth } from './utils/firebase';
+import { logout } from './utils/auth'
+
+interface AppProps {
+}
+interface AppState {
+    authed: boolean;
+    loading: boolean;
+}
+
+function PrivateRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === true
+        ? <Component {...props} />
+        : <Redirect to={{pathname: '/Login', state: {from: props.location}}} />}
+    />
+  )
+}
+
+function PublicRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === false
+        ? <Component {...props} />
+        : <Redirect to='/Home' />}
+    />
+  )
+}
 
 const paperStyle = {
     height: '85%',
@@ -21,115 +55,94 @@ const paperStyle = {
     display: 'inline-block',
 };
 
-class Sidebar extends Component {
+class Sidebar extends Component <AppProps, AppState>{
 
   constructor(props){
      super(props);
      this.state = {
-               "open": false,
-               "show": null,
-               "authenticated" : false
-           };
+         authed: false,
+         loading: true,
+         "open": false,
+         "show": null,
+         "authenticated" : false
+     }
+  }
+  handleToggle = () => this.setState({open: !this.state.open});
 
-           this.handleToggle = () => this.setState({open: !this.state.open});
-
-           this.showHome = () => {
-               this.setState({show: 'home', open: false, authenticated : false });
-           };
-
-           this.showStaff = () => {
-               this.setState({show: 'staff', open: false, authenticated : false });
-           };
-
-           this.showBranchList = () => {
-               this.setState({show: 'branchlist', open: false, authenticated : false });
-           };
-
-           this.showLogin = () => {
-               this.setState({show: 'login', open: false, authenticated : false });
-           };
-
-           this.showBonusCalc  = () => {
-               this.setState({show: 'bonuscalc', open: false, authenticated : false });
-           };
-      // Initialize Firebase
-       var config = {
-         apiKey: "AIzaSyDeM4zkSI2494TOTisoF4IwwrXX0slt9rE",
-         authDomain: "bonuscalculator-3cc6c.firebaseapp.com",
-         databaseURL: "https://bonuscalculator-3cc6c.firebaseio.com",
-         projectId: "bonuscalculator-3cc6c",
-         storageBucket: "bonuscalculator-3cc6c.appspot.com",
-         messagingSenderId: "588481287510"
-       };
-       firebase.initializeApp(config);
+  componentDidMount () {
+      firebaseAuth().onAuthStateChanged((user) => {
+          if (user) {
+              this.setState({
+                  authed: true,
+                  loading: false,
+              })
+          } else {
+              this.setState({
+                  authed: false,
+                  loading: false
+              })
+          }
+      })
   }
 
   render() {
-    let content = null;
+        return this.state.loading === true ? <h1>Loading</h1> : (
 
-    switch(this.state.show) {
-        case 'home':
-            content = (<Home authenticated={this.state.authenticated}/>);
-            break;
+          <Router>
+                  <div className="App">
+                    <AppBar
+                        iconClassNameRight="muidocs-icon-navigation-expand-more"
+                        title="Bonus Calculator"
+                        onLeftIconButtonClick={this.handleToggle}
+                    />
+                      {
+                          this.state.authed
+                          ? <button
+                              style={{border: 'none', background: 'transparent'}}
+                              onClick={() => {
+                                  logout()
+                              }}
+                              className="navbar-brand">Logout</button>
+                              :   <Drawer
+                                    docked={false}
+                                    width={200}
+                                    open={this.state.open}
+                                    onRequestChange={(open) => this.setState({open})}>
 
-        case 'staff':
-                   content = (<Staff authenticated={this.state.authenticated}/>);
-                   break;
-        case 'branchlist':
-            content = (<Branchlist authenticated={this.state.authenticated}/>);
-            break;
+                                    <AppBar title="AppBar"/>
+                                    <ul>
+                                            <li>
+                                              <MenuItem><Link to="/Home" >Home</Link></MenuItem>
+                                            </li>
+                                            <li>
+                                              <MenuItem> <Link to="/Staff">Staff</Link></MenuItem>
+                                            </li>
+                                            <li>
+                                              <MenuItem><Link to="/Branches">Branches</Link></MenuItem>
+                                            </li>
+                                            <li>
+                                              <MenuItem><Link to="/BonusCalc">Bonus Calculator</Link></MenuItem>
+                                            </li>
+                                            <li>
+                                              <MenuItem><Link to="/Login">Login</Link></MenuItem>
+                                            </li>
+                                      </ul>
+                                </Drawer>
+                      }
 
-        case 'bonuscalc':
-                content = (<BonusCalc authenticated={this.state.authenticated}/>);
-                break;
+                      <Switch>
+                          <Route path='/' exact component={Home} />
+                          <PublicRoute authed={this.state.authed} path='/Login' component={Login} />
+                          <PublicRoute authed={this.state.authed} path='/Signup' component={Signup} />
+                          <PrivateRoute authed={this.state.authed} path='/Staff' component={Staff} />
+  												<PrivateRoute authed={this.state.authed} path='/Branches' component={Branches} />
+  												<PrivateRoute authed={this.state.authed} path='/BonusCalc' component={BonusCalc} />
+                          <Route render={() => <h3>No Match</h3>} />
+                      </Switch>
 
-         case 'login':
-                content = (<Login/>);
-                break;
-
-        default:
-            content = <h1>&nbsp;</h1>
-    }
-
-    return (
-
-          <div className="App">
-                          <AppBar
-                              iconClassNameRight="muidocs-icon-navigation-expand-more"
-                              title="Bonus Calculator"
-                              onLeftIconButtonClick={this.handleToggle}
-                          />
-                      <Drawer
-                              docked={false}
-                              width={200}
-                              open={this.state.open}
-                              onRequestChange={(open) => this.setState({open})}>
-
-                               <AppBar title="AppBar"/>
-
-                              <ul>
-                                      <li>
-                                        <MenuItem><Link to="/Home" >Home</Link></MenuItem>
-                                      </li>
-                                      <li>
-                                        <MenuItem> <Link to="/Staff">Staff</Link></MenuItem>
-                                      </li>
-                                      <li>
-                                        <MenuItem><Link to="/Branches">Branches</Link></MenuItem>
-                                      </li>
-                                      <li>
-                                        <MenuItem><Link to="/BonusCalc">Bonus Calculator</Link></MenuItem>
-                                      </li>
-                                      <li>
-                                        <MenuItem><Link to="/Login">Login</Link></MenuItem>
-                                      </li>
-                                </ul>
-
-                          </Drawer>
-                          <AppRoutes />
-
-                      </div>
-    );
+                  </div>
+              </Router>
+    )
   }
 }
 

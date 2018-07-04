@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import { Redirect, BrowserRouter, Link} from 'react-router-dom';
 import App from '../App';
 import Home from '../Home';
 import Login from '../Login';
@@ -10,87 +10,95 @@ import Staff from '../staff';
 import BonusCalc from './bonuscalc';
 //import firebase from 'firebase';
 import { config } from '../utils/Config';
-//import Dashboard from '../pages/dashboard';
-//import { config } from '../utils/Config';
-let user = {
-	isLoggedIn: false
+import { firebaseAuth } from '../utils/firebase';
+//import {App, Home, Login, Signup, Branches, Staff,BonusCalc } from '../components'
+import { logout } from '../utils/auth'
+
+interface AppProps {
+}
+interface AppState {
+    authed: boolean;
+    loading: boolean;
 }
 
-
-
-const fakeAuth = {
-isAuthenticated: false,
-authenticate(cb) {
-	this.isAuthenticated = true;
-	setTimeout(cb, 100); // fake async
-},
-signout(cb) {
-	this.isAuthenticated = false;
-	setTimeout(cb, 100);
+function PrivateRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === true
+        ? <Component {...props} />
+        : <Redirect to={{pathname: '/Login', state: {from: props.location}}} />}
+    />
+  )
 }
-};
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    fakeAuth.isAuthenticated === true
-      ? <Component {...props} />
-      : <Redirect to={{
-          pathname: '/login',
-          state: { from: props.location }
-        }} />
-  )} />
-)
+function PublicRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === false
+        ? <Component {...props} />
+        : <Redirect to='/Home' />}
+    />
+  )
+}
 
-export default class AppRoutes extends React.Component {
-	// initially assuming that user is logged out
+export default class AppRoutes extends React.Component<AppProps, AppState> {
+	constructor(props){
+         super(props);
 
-	constructor(props) {
-			super(props);
-		        // initially assuming that user is logged out
-				let user = {
-					isLoggedIn: false
-			}
-
-	        // if user is logged in, his details can be found from local storage
-			try {
-
-				let userJsonString = localStorage.getItem(config.localStorageKey);
-					if (userJsonString) {
-						user = JSON.parse(userJsonString);
-				}
-
-			} catch (exception) {
-
-			}
-			 // updating the state
-
-			this.state = {
-				user: user
-			};
-
-			this.authenticate = this.authenticate.bind(this);
-		}
-
-		// this function is called on login/logout
-		authenticate(user) {
-				this.setState({
-					user: user
-				});
-			// updating user's details
-			localStorage.setItem(config.localStorageKey, JSON.stringify(user));
-	}
+         this.state = {
+             authed: false,
+             loading: true
+         }
+     }
+     componentDidMount () {
+         firebaseAuth().onAuthStateChanged((user) => {
+             if (user) {
+                 this.setState({
+                     authed: true,
+                     loading: false,
+                 })
+             } else {
+                 this.setState({
+                     authed: false,
+                     loading: false
+                 })
+             }
+         })
+     }
 
 	render() {
-		return (
-			<Switch>
-			    <Route exact path='/' component={App} />
-			    <Route exact path='/Login' render={() => <Login authenticate={this.authenticate} />} />
-					<Route exact path='/Home' render={() => <Home authenticate={this.authenticate} />} />
-					<PrivateRoute path='/Staff' component={Staff} />
-					<Route exact path='/Branches' render={() => <Branches authenticate={this.authenticate} />} />
-					<Route exact path='/BonusCalc' render={() => <BonusCalc authenticate={this.authenticate} />} />
-			    <Route exact path='/Signup' render={() => <Signup authenticate={this.authenticate} />} />
-			</Switch>
-		);
+			return this.state.loading === true ? <h1>Loading</h1> : (
+
+				<BrowserRouter>
+                <div>
+                    {
+                        this.state.authed
+                        ? <button
+                            style={{border: 'none', background: 'transparent'}}
+                            onClick={() => {
+                                logout()
+                            }}
+                            className="navbar-brand">Logout</button>
+                        : <span>
+                            <Link to="/login" className="navbar-brand">Login</Link>
+                            <Link to="/register" className="navbar-brand">Register</Link>
+                        </span>
+                    }
+
+                    <Switch>
+                        <Route path='/' exact component={Home} />
+                        <PublicRoute authed={this.state.authed} path='/Login' component={Login} />
+                        <PublicRoute authed={this.state.authed} path='/Signup' component={Signup} />
+                        <PrivateRoute authed={this.state.authed} path='/Staff' component={Staff} />
+												<PrivateRoute authed={this.state.authed} path='/Branches' component={Branches} />
+												<PrivateRoute authed={this.state.authed} path='/BonusCalc' component={BonusCalc} />
+                        <Route render={() => <h3>No Match</h3>} />
+                    </Switch>
+
+                </div>
+            </BrowserRouter>
+			)
 	}
 }
