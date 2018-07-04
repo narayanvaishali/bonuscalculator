@@ -68,6 +68,7 @@ class Sidebar extends Component <AppProps, AppState>{
      }
   }
   handleToggle = () => this.setState({open: !this.state.open});
+  Logout = () => {logout()}
 
   componentDidMount () {
       firebaseAuth().onAuthStateChanged((user) => {
@@ -96,20 +97,13 @@ class Sidebar extends Component <AppProps, AppState>{
                         onLeftIconButtonClick={this.handleToggle}
                     />
                       {
-                          this.state.authed
-                          ? <button
-                              style={{border: 'none', background: 'transparent'}}
-                              onClick={() => {
-                                  logout()
-                              }}
-                              className="navbar-brand">Logout</button>
-                              :   <Drawer
+                            <Drawer
                                     docked={false}
                                     width={200}
                                     open={this.state.open}
                                     onRequestChange={(open) => this.setState({open})}>
 
-                                    <AppBar title="AppBar"/>
+                                    <AppBar title="Menu"/>
                                     <ul>
                                             <li>
                                               <MenuItem><Link to="/Home" >Home</Link></MenuItem>
@@ -123,9 +117,16 @@ class Sidebar extends Component <AppProps, AppState>{
                                             <li>
                                               <MenuItem><Link to="/BonusCalc">Bonus Calculator</Link></MenuItem>
                                             </li>
+                                          {  this.state.authed
+                                            ?
                                             <li>
-                                              <MenuItem><Link to="/Login">Login</Link></MenuItem>
+                                              <MenuItem onClick={this.Logout}><Link to="/Logout">Logout</Link></MenuItem>
                                             </li>
+                                            :
+                                              <li>
+                                                <MenuItem><Link to="/Login">Login</Link></MenuItem>
+                                              </li>
+                                            }
                                       </ul>
                                 </Drawer>
                       }
@@ -137,7 +138,7 @@ class Sidebar extends Component <AppProps, AppState>{
                           <PrivateRoute authed={this.state.authed} path='/Staff' component={Staff} />
   												<PrivateRoute authed={this.state.authed} path='/Branches' component={Branches} />
   												<PrivateRoute authed={this.state.authed} path='/BonusCalc' component={BonusCalc} />
-                          <Route render={() => <h3>No Match</h3>} />
+                          <Route render={() => <h3>&nbsp;</h3>} />
                       </Switch>
 
                   </div>
