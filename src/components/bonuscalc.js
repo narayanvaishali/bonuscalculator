@@ -120,7 +120,7 @@ const styles = {
     width:"100%"
   },
   table1 :  {
-     border:"1",
+     border:"0",
      backgroundcolor: "#E9E9E9",
      verticalAlign :"center",
      spacing:"10",
@@ -155,7 +155,7 @@ const styles = {
                                      <table >
                                          <tr>
                                             <td style={{colspan:"2"}}>
-                                                 <table border="1" styles={{background: '#0080bd', width:'100em', cellspacing:'10', cellpadding:'10' }}>
+                                                 <table border="0" styles={{background: '#0080bd', width:'100em', cellspacing:'10', cellpadding:'10' }}>
                                                      <tr>
                                                          <td><span >Branch</span></td>
                                                          <td>
@@ -195,7 +195,7 @@ const styles = {
                                          </tr>
                                          <tr>
                                              <td >
-                                                  <table border="1" styles={{ width:"50%", cellspacing:"10", cellpadding:"10"}}>
+                                                  <table border="0" styles={{ width:"50%", cellspacing:"10", cellpadding:"10"}}>
 
                                                  </table>
                                              </td>
@@ -205,7 +205,7 @@ const styles = {
                                          </tr>
                                          <tr>
                                              <td >
-                                                 <table width="100%" border="1" >
+                                                 <table width="100%" border="0" >
                                                      <tr>
                                                           <td  style={{textAlign:"center", height: "59px", background: "#0051A3"}}>
                                                              <label id="lblBonus" >£000.00</label>

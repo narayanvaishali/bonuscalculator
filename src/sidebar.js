@@ -99,94 +99,77 @@ class Sidebar extends Component<AppProps, AppState> {
   }
 
   render() {
-    return this.state.loading === true ? (
-      <h1>Loading</h1>
-    ) : (
-      <Router>
-        <div className="App">
-          <AppBar
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-            title="Bonus Calculator"
-            onLeftIconButtonClick={this.handleToggle}
-          />
-          {
-            <Drawer
-              docked={false}
-              width={200}
-              open={this.state.open}
-              onRequestChange={open => this.setState({ open })}
-            >
-              <AppBar title="Menu" />
-              <ul>
-                <li>
-                  <MenuItem>
-                    <Link to="/Home">Home</Link>
-                  </MenuItem>
-                </li>
-                <li>
-                  <MenuItem>
-                    {" "}
-                    <Link to="/Staff">Staff</Link>
-                  </MenuItem>
-                </li>
-                <li>
-                  <MenuItem>
-                    <Link to="/Branches">Branches</Link>
-                  </MenuItem>
-                </li>
-                <li>
-                  <MenuItem>
-                    <Link to="/BonusCalc">Bonus Calculator</Link>
-                  </MenuItem>
-                </li>
-                {this.state.authed ? (
-                  <li>
-                    <MenuItem onClick={this.Logout}>
-                      <Link to="/Logout">Logout</Link>
-                    </MenuItem>
-                  </li>
-                ) : (
-                  <li>
-                    <MenuItem>
-                      <Link to="/Login">Login</Link>
-                    </MenuItem>
-                  </li>
-                )}
-              </ul>
-            </Drawer>
-          }
+    let content = null;
 
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <PublicRoute
-              authed={this.state.authed}
-              path="/Login"
-              component={Login}
-            />
-            <PublicRoute
-              authed={this.state.authed}
-              path="/Signup"
-              component={Signup}
-            />
-            <PrivateRoute
-              authed={this.state.authed}
-              path="/Staff"
-              component={Staff}
-            />
-            <PrivateRoute
-              authed={this.state.authed}
-              path="/Branches"
-              component={Branches}
-            />
-            <PrivateRoute
-              authed={this.state.authed}
-              path="/BonusCalc"
-              component={BonusCalc}
-            />
-            <Route render={() => <h3>&nbsp;</h3>} />
-          </Switch>
-        </div>
-      </Router>
+    switch (this.state.show) {
+      case "home":
+        content = <h1>&nbsp;</h1>;
+        break;
+
+      case "staff":
+        content = <h1>&nbsp;</h1>;
+        break;
+      case "branchlist":
+        content = <h1>&nbsp;</h1>;
+        break;
+
+      case "bonuscalc":
+        content = <h1>&nbsp;</h1>;
+        break;
+
+      case "login":
+        content = <h1>&nbsp;</h1>;
+        break;
+
+      default:
+        content = <h1>&nbsp;</h1>;
+    }
+
+    return (
+      <div className="App">
+        <AppBar
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+          title="Bonus Calculator"
+          onLeftIconButtonClick={this.handleToggle}
+        />
+        <Drawer
+          docked={false}
+          width={200}
+          open={this.state.open}
+          onRequestChange={open => this.setState({ open })}
+        >
+          <AppBar title="AppBar" />
+
+          <ul>
+            <li>
+              <MenuItem>
+                <Link to="/Home">Home</Link>
+              </MenuItem>
+            </li>
+            <li>
+              <MenuItem>
+                <Link to="/Staff">Staff</Link>
+              </MenuItem>
+            </li>
+            <li>
+              <MenuItem>
+                <Link to="/Branchlist">Branches</Link>
+              </MenuItem>
+            </li>
+            <li>
+              <MenuItem>
+                <Link to="/BonusCalc">Bonus Calculator</Link>
+              </MenuItem>
+            </li>
+            <li>
+              <MenuItem>
+                <Link to="/Login">Login</Link>
+              </MenuItem>
+            </li>
+          </ul>
+        </Drawer>
+        <AppRoutes />
+      </div>
     );
   }
 }
