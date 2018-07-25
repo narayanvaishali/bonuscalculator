@@ -1,35 +1,20 @@
-import React, { Component } from 'react';
-//import logo from './logo.svg';
-import Login from './Login';
-import Register from './Register';
-import SideBar from './sidebar';
-import { BrowserRouter , Switch, Route, Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
+//views
+import IndexPage from "./views/";
+import Login from "./views/login";
 
 class App extends Component {
-
   render() {
-    const buttonStyle = {
-     marginRight: '1em'
-   };
-  return (
-      <div className="App">
-        <div class="jumbotron">
-            <h1>Bonus Calculator</h1>
-            <Link to={`/login`}>
-                <button type="button" class="btn btn-primary btn-lg" style={buttonStyle}>
-                    Login
-                </button>
-            </Link>
-            <Link to={`/signup`}>
-                <button type="button" class="btn btn-primary btn-lg" style={buttonStyle}>
-                    Signup
-                </button>
-            </Link>
+    return (
+      <Router>
+        <div>
+          <Route exact path="/" component={IndexPage} />
+          <Route exact path="/login" component={Login} />
         </div>
-
-        </div>
-    )
+      </Router>
+    );
   }
 }
 
