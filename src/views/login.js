@@ -7,6 +7,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
+import AlertDialog from "../components/AlertDialog";
+
+//utility
+import { login, isAuthenticated } from "../utils/auth";
 
 const styles = theme => ({
   formControl: {
@@ -26,10 +32,18 @@ class Login extends Component {
     super(props, context);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      alert: false
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  componentDidMount() {
+    if (isAuthenticated()) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   handleChange = e => {
@@ -41,10 +55,24 @@ class Login extends Component {
 
   handleLogin = e => {
     e.preventDefault();
+
+    const { email, password } = this.state;
+
+    login(email, password)
+      .then(res => {
+        this.props.history.push("/dashboard");
+      })
+      .catch(err => {
+        this.setState({ alert: true });
+        console.log(err);
+      });
   };
+
+  LandingPageLink = props => <Link to="/" {...props} />;
 
   render() {
     const { classes } = this.props;
+
     return (
       <Layout>
         <div
@@ -58,6 +86,7 @@ class Login extends Component {
         >
           <Paper elevation={3} className={classes.loginContainer}>
             <Typography variant="display2">Login</Typography>
+
             <FormControl fullWidth className={classes.formControl}>
               <InputLabel htmlFor="email">Email</InputLabel>
               <Input
@@ -79,15 +108,28 @@ class Login extends Component {
 
             <FormControl className={classes.formControl} fullWidth>
               <div className={classes.alignRight}>
-                <Button variant="contained" color="primary">
-                  Sign In{" "}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleLogin}
+                >
+                  Sign In
                 </Button>
-                <Button variant="outlined" href={"/"}>
+                <Button variant="outlined" component={this.LandingPageLink}>
                   Cancel
                 </Button>
               </div>
             </FormControl>
           </Paper>
+
+          <AlertDialog
+            title="Invalid Login"
+            message="There is an error loggin you in. Please check email and password and try again"
+            open={this.state.alert}
+            onClose={() => {
+              this.setState({ alert: false });
+            }}
+          />
         </div>
       </Layout>
     );

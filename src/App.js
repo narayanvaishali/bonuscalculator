@@ -4,6 +4,11 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 //views
 import IndexPage from "./views/";
 import Login from "./views/login";
+import { isAuthenticated } from "./utils/auth";
+
+if (!isAuthenticated()) {
+  window.location.href = "/login";
+}
 
 class App extends Component {
   render() {

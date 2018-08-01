@@ -3,6 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   parallax: {
@@ -61,14 +62,15 @@ class Hero extends Component {
       </Typography>
     );
 
+    const PrimaryLink = props => <Link to={primaryBtnLink} {...props} />;
+
     const PrimaryBtn = (
       <Grid item className={classes.heroBtn} xs={12}>
         <Button
-          href={primaryBtnLink}
           title={primaryBtnText}
           className={classes.invertedBtn}
-          color="`secon`dary"
           style={{ width: "192px" }}
+          component={PrimaryLink}
         >
           {primaryBtnText}
         </Button>
