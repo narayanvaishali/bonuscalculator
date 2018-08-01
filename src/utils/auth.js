@@ -7,7 +7,11 @@ export function auth(email, pw) {
 }
 
 export function logout() {
-  return firebaseAuth().signOut();
+  return firebaseAuth()
+    .signOut()
+    .then(res => {
+      localStorage.removeItem("token");
+    });
 }
 
 export function login(email, pw) {
@@ -31,7 +35,7 @@ export function saveUser(user) {
 export function isAuthenticated() {
   if (localStorage.token) {
     //@TODO: Use token similar to JWT so that user information can be displayed
-    //set Login value
+
     return localStorage.token;
   }
 }

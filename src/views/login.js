@@ -31,7 +31,7 @@ class Login extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      email: "",
+      email: "testuser@vgcorp.com",
       password: "",
       alert: false
     };
@@ -60,6 +60,7 @@ class Login extends Component {
 
     login(email, password)
       .then(res => {
+        localStorage.setItem("token", res.qa);
         this.props.history.push("/dashboard");
       })
       .catch(err => {

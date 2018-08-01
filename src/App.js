@@ -4,11 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 //views
 import IndexPage from "./views/";
 import Login from "./views/login";
-import { isAuthenticated } from "./utils/auth";
-
-if (!isAuthenticated()) {
-  window.location.href = "/login";
-}
+import Dashboard from "./views/dashboard";
 
 class App extends Component {
   render() {
@@ -17,6 +13,8 @@ class App extends Component {
         <div>
           <Route exact path="/" component={IndexPage} />
           <Route exact path="/login" component={Login} />
+
+          <Route exact path="/dashboard" component={Dashboard} />
         </div>
       </Router>
     );
