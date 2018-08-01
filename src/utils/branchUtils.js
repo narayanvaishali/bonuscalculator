@@ -19,7 +19,13 @@ export function getBranches(done) {
   });
 }
 
-export function getBranch() {}
+export function getBranch(key, done) {
+  const branchRef = db.ref(`branches/${key}`);
+  branchRef.once("value", snapshot => {
+    const branch = snapshot.val();
+    done(branch);
+  });
+}
 
 export function createBranch(branch, done) {
   const branchesRef = db.ref("branches");
@@ -29,6 +35,28 @@ export function createBranch(branch, done) {
     .catch(err => done(err, undefined));
 }
 
-export function updateBranch() {}
+export function updateBranch(id, branch, done) {
+  const branchRef = db.ref(`branches/${id}`);
+  branchRef
+    .update(branch)
+    .then(res => {
+      console.log(res);
+      done(false);
+    })
+    .catch(err => {
+      done(err, undefined);
+    });
+}
 
-export function deleteBranch() {}
+export function deleteBranch(id, done) {
+  const branchRef = db.ref(`branches/${id}`);
+  branchRef
+    .remove()
+    .then(res => {
+      console.log(res);
+      done(false);
+    })
+    .catch(err => {
+      done(err, undefined);
+    });
+}

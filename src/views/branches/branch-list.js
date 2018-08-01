@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
 
 //actions
-import { getBranches } from "../../utils/branchUtils";
+import { getBranches, getBranch } from "../../utils/branchUtils";
 
 const styles = theme => ({
   root: {
@@ -43,9 +43,25 @@ class BranchList extends Component {
       loading: false,
       branches: []
     };
+
+    this.handleEditBranch = this.handleEditBranch.bind(this);
+  }
+
+  handleEditBranch(id) {
+    this.props.history.push(`/branches/${id}`);
+  }
+
+  handleDeleteBranch(id) {
+    this.props.history.push(`/branches/${id}/delete`);
   }
 
   componentDidMount() {
+    getBranches(list => {
+      this.setState({ branches: list });
+    });
+  }
+
+  componentDidUpdate() {
     getBranches(list => {
       this.setState({ branches: list });
     });
@@ -95,6 +111,7 @@ class BranchList extends Component {
                         className={classes.button}
                         mini
                         color="primary"
+                        onClick={() => this.handleEditBranch(b.key)}
                       >
                         <EditIcon />
                       </Button>
@@ -104,6 +121,7 @@ class BranchList extends Component {
                         className={classes.button}
                         mini
                         color="secondary"
+                        onClick={() => this.handleDeleteBranch(b.key)}
                       >
                         <DeleteIcon />
                       </Button>
