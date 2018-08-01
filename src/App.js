@@ -6,6 +6,8 @@ import IndexPage from "./views/";
 import Login from "./views/login";
 import Dashboard from "./views/dashboard";
 
+import BranchIndex from "./views/branches/";
+
 class App extends Component {
   render() {
     return (
@@ -15,6 +17,7 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
 
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route path="/branches" component={BranchIndex} />
         </div>
       </Router>
     );
