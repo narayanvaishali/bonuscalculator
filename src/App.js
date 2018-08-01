@@ -8,6 +8,7 @@ import Dashboard from "./views/dashboard";
 
 import BranchIndex from "./views/branches/";
 import StaffIndex from "./views/staffs/";
+import BonusCalculator from "./views/bonus-calculator";
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route path="/branches" component={BranchIndex} />
           <Route path="/staffs" component={StaffIndex} />
+          <Route path="/bonus-calculator" component={BonusCalculator} />
         </div>
       </Router>
     );

@@ -85,7 +85,7 @@ const Sidebar = ({ classes, routerHistory }) => {
           </ListItemIcon>
           <ListItemText
             primary="Bonus"
-            onClick={() => handleClick("/bonus", routerHistory)}
+            onClick={() => handleClick("/bonus-calculator", routerHistory)}
           />
         </ListItem>
       </List>
