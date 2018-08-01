@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
 
 //actions
-import { getBranches, getBranch } from "../../utils/branchUtils";
+import { getBranches } from "../../utils/branchUtils";
 
 const styles = theme => ({
   root: {
