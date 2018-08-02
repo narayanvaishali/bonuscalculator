@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import SecureRoute from "./components/SecureRoute";
 
 //views
 import IndexPage from "./views/";
@@ -18,10 +19,10 @@ class App extends Component {
           <Route exact path="/" component={IndexPage} />
           <Route exact path="/login" component={Login} />
 
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route path="/branches" component={BranchIndex} />
-          <Route path="/staffs" component={StaffIndex} />
-          <Route path="/bonus-calculator" component={BonusCalculator} />
+          <SecureRoute exact path="/dashboard" component={Dashboard} />
+          <SecureRoute path="/branches" component={BranchIndex} />
+          <SecureRoute path="/staffs" component={StaffIndex} />
+          <SecureRoute path="/bonus-calculator" component={BonusCalculator} />
         </div>
       </Router>
     );
