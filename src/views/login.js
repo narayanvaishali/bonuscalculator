@@ -86,41 +86,39 @@ class Login extends Component {
           }}
         >
           <Paper elevation={3} className={classes.loginContainer}>
-            <Typography variant="display2">Login</Typography>
+            <form onSubmit={this.handleLogin} noValidate>
+              <Typography variant="display2">Login</Typography>
 
-            <FormControl fullWidth className={classes.formControl}>
-              <InputLabel htmlFor="email">Email</InputLabel>
-              <Input
-                id="email"
-                value={this.state.email}
-                type="email"
-                onChange={this.handleChange}
-              />
-            </FormControl>
-            <FormControl fullWidth className={classes.formControl}>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                id="password"
-                value={this.state.password}
-                type="password"
-                onChange={this.handleChange}
-              />
-            </FormControl>
+              <FormControl fullWidth className={classes.formControl}>
+                <InputLabel htmlFor="email">Email</InputLabel>
+                <Input
+                  id="email"
+                  value={this.state.email}
+                  type="email"
+                  onChange={this.handleChange}
+                />
+              </FormControl>
+              <FormControl fullWidth className={classes.formControl}>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  id="password"
+                  value={this.state.password}
+                  type="password"
+                  onChange={this.handleChange}
+                />
+              </FormControl>
 
-            <FormControl className={classes.formControl} fullWidth>
-              <div className={classes.alignRight}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleLogin}
-                >
-                  Sign In
-                </Button>
-                <Button variant="outlined" component={this.LandingPageLink}>
-                  Cancel
-                </Button>
-              </div>
-            </FormControl>
+              <FormControl className={classes.formControl} fullWidth>
+                <div className={classes.alignRight}>
+                  <Button variant="contained" color="primary" type="submit">
+                    Sign In
+                  </Button>
+                  <Button variant="outlined" component={this.LandingPageLink}>
+                    Cancel
+                  </Button>
+                </div>
+              </FormControl>
+            </form>
           </Paper>
 
           <AlertDialog

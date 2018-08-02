@@ -52,41 +52,38 @@ const Sidebar = ({ classes, routerHistory }) => {
     >
       <div className={classes.toolbar} />
       <List>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => handleClick("/dashboard", routerHistory)}
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText
-            primary="Home"
-            onClick={() => handleClick("/dashboard", routerHistory)}
-          />
+          <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => handleClick("/staffs", routerHistory)}>
           <ListItemIcon>
             <StarIcon />
           </ListItemIcon>
-          <ListItemText
-            primary="Staff"
-            onClick={() => handleClick("/staffs", routerHistory)}
-          />
+          <ListItemText primary="Staff" />
         </ListItem>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => handleClick("/branches", routerHistory)}
+        >
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
-          <ListItemText
-            primary="Branch"
-            onClick={() => handleClick("/branches", routerHistory)}
-          />
+          <ListItemText primary="Branch" />
         </ListItem>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => handleClick("/bonus-calculator", routerHistory)}
+        >
           <ListItemIcon>
             <DraftsIcon />
           </ListItemIcon>
-          <ListItemText
-            primary="Bonus"
-            onClick={() => handleClick("/bonus-calculator", routerHistory)}
-          />
+          <ListItemText primary="Bonus" />
         </ListItem>
       </List>
       <Divider />
