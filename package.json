@@ -1,17 +1,16 @@
 {
-  "name": "bonus_calc",
+  "name": "bonuscalculator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^1.4.1",
+    "@material-ui/icons": "^2.0.0",
     "firebase": "^4.10.1",
-    "lodash": "^4.17.5",
-    "material-ui": "^0.20.0",
+    "npm": "^6.3.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1",
-    "react-validation": "^3.0.7",
-    "trim": "0.0.1"
+    "react-scripts": "1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
